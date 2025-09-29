@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1753674317169,
+      "tag": "0000_tiny_legion",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1753674382076,
+      "tag": "0001_real_randall_flagg",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1753674780475,
+      "tag": "0002_faithful_korath",
+      "breakpoints": true
+    }
+  ]
+}
