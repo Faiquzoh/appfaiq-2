@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/components/theme-provider"
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -25,20 +26,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning  
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+        {/* <div>
           <Link href={"/"}></Link>
           <Link href={"/about"}>About </Link>
           <Link href={"/contact"}>Contact </Link>
           <Link href={"/users"}>Users </Link>
           <Link href={"/jokes"}>jokes </Link>
           <Link href={"/alquran"}>al-Quran </Link>
-        </div>
+        </div> */}
         {children}
         <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );
