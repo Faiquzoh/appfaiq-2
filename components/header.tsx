@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import { ModeToggle } from './buttons/mode-toggle'
+import Image from 'next/image'
 
 const menuItems = [
     { name: 'Features', href: '#link' },
@@ -27,7 +28,14 @@ export const HeroHeader = () => {
                                 href="/"
                                 aria-label="home"
                                 className="flex items-center space-x-2">
-                                <Logo />
+                                {/* <Logo /> */}
+                                <div className="relative w-30 h-10">
+                                    <Image
+                                    src="/logo-fai.png"
+                                    alt="logo website"
+                                    fill 
+                                    />
+                                </div>
                             </Link>
 
                             <button
