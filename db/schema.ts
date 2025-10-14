@@ -28,6 +28,7 @@ gabisa dari terminal, karena kita pakai databse online gratisan
 
 
 import { uuid, integer, text, boolean, pgTable, timestamp } from "drizzle-orm/pg-core";
+import { title } from "process";
 export const user = pgTable("user", { //users = nama sql table kita di neon postgreSQL const nya bebas
   id: text("id").primaryKey(),
   name: text("name"),
@@ -84,10 +85,33 @@ export const verification = pgTable("verification", {
   createdAt: timestamp("created_at").$defaultFn(
     () => /* @__PURE__ */ new Date(),
   ),
+  
+
+
+
   updatedAt: timestamp("updated_at").$defaultFn(
     () => /* @__PURE__ */ new Date(),
   ),
 });
+
+
+export const notebooks = pgTable("notebooks", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  title: text("title").notNull(),
+});
+// skema / struktur database u/ fitur jurnal catatan harian
+export const notes = pgTable("notebook", {
+  // strukstur skema id, title
+  id: uuid("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  title: text("title").notNull(),
+});
+
+
+
+
+
+
+
 // export const session = pgTable("session", {
 //   id: uuid("id").primaryKey().defaultRandom(),
 //   userId: text("userId").notNull().unique(),
