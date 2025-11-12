@@ -1,9 +1,7 @@
-    "use client"
-
+"use client"
 
 import * as React from "react"
 import { CheckIcon, ChevronsUpDownIcon } from "lucide-react"
-
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -22,43 +20,41 @@ import {
 } from "@/components/ui/popover"
 import { fetchDataQuran } from "@/lib/quran"
 
-
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-]
-
+// const frameworks = [
+//   {
+//     value: "next.js",
+//     label: "Next.js",
+//   },
+//   {
+//     value: "sveltekit",
+//     label: "SvelteKit",
+//   },
+//   {
+//     value: "nuxt.js",
+//     label: "Nuxt.js",
+//   },
+//   {
+//     value: "remix",
+//     label: "Remix",
+//   },
+//   {
+//     value: "astro",
+//     label: "Astro",
+//   },
+// ]
 
 export default function DropdownAyat(
     {valueSurat,ayatTerpilih,ayatYgBerubah}:{
-        valueSurat:string
-        ayatTerpilih:string
+        valueSurat:string 
+        ayatTerpilih:string 
         ayatYgBerubah:(value:number)=>void
     }
 ) {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
-  const [opsiAyat,setOpsiAyat] = React.useState<number[]>([]) // [] biar dieksekusi sekali
+  // const [value, setValue] = React.useState("")
+  const [opsiAyat,setOpsiAyat] = React.useState<number[]>([]) // [] biar dieksekusi sekali 
 /*
-bentuk umum useEffect dg api
+bentuk umum useEffect dg api 
 buat function yg akan dipanggil sekali:
     misalnya get data
         didalamnya:
@@ -78,7 +74,6 @@ setelah dibuat dipanggil agar tereksekusi sekali ketika komponen ini dirender ol
     }
     if (valueSurat) getData()
   }, [valueSurat]) //khusus u/ komponen yg bergantung pada komponen lainnya
-
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -125,4 +120,3 @@ setelah dibuat dipanggil agar tereksekusi sekali ketika komponen ini dirender ol
     </Popover>
   )
 }
-

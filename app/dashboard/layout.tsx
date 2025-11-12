@@ -1,6 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarProvider } from "@/components/ui/sidebar"
-import { Sidebar } from "lucide-react"
+
 
 export default function DashboardLayout ({
     children, 

@@ -28,15 +28,14 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { authClient } from "@/lib/auth-client"
 import { toast } from "sonner"
-import { createNotebook } from "@/server/notebook"
 import { Loader2 } from "lucide-react"
+import { createNote } from "@/server/notes"
 const formSchema = z.object({
   name: z.string().min(2).max(50),
 })
 
 
-export default function CreateNotebookButton() {
-
+export default function CreateNoteButton({notebookId}:{notebookId:string}) {
   // setupform2: router utk refresh halaman setelah buat notebook baru, state loading utk menandakan proses submit sedang berjalan, state open utk menandakan dialog terbuka atau tidak, default value form, dan function onSubmit
   const router = useRouter()
   const [isLoading,setIsLoading] = useState(false)
@@ -62,15 +61,18 @@ export default function CreateNotebookButton() {
               toast.error("silahkan login terlebih dahulu untuk membuat jurnal")
               return
           }
-          const response = await createNotebook({
-              ...values,
-              userId,
+          const response = await createNote({
+              // ...values,
+              // userId,
+              title: values.name,
+              notebookId,
+              content: {}, //bukan string kosong krn di database catetannya tersimpan dlm json, {} = objek kosong
           })
           if (response.success){
               // menghapus form input agar menjadi kosong
               form.reset()
               // menampilkan pesan dg ui sonner
-              toast.success("jurnal telah terbuat alhamdulillah")
+              toast.success("lembar catatan telah terbuat alhamdulillah")
               // refresh halaman
               router.refresh()
               // menutup dialog dg state false
@@ -81,7 +83,7 @@ export default function CreateNotebookButton() {
           }
       } catch (error) {
           // menampilkan pesan error dg ui sonner
-          toast.error("failed to create notebook")  
+          toast.error("failed to create note")  
           console.log(error)
       } finally {
           // membuat icon loading yg berputar kembali menjadi tulisan karena proses ny sudah selesai
@@ -93,13 +95,13 @@ export default function CreateNotebookButton() {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {/* komponen Button kalau kita mau sempil didalam komponen shadcn misalnya dialog harus pembungkus Button nya ini dikasih atribut asChild agar tidak konflik*/}
       <DialogTrigger asChild>
-        <Button>Create Journal</Button>
+        <Button>Create Note</Button>
       </DialogTrigger>
       <DialogContent>
           <DialogHeader>
-          <DialogTitle>Create Your Journal</DialogTitle>
+          <DialogTitle>Create Your Note</DialogTitle>
             <DialogDescription>
-                Create a new journal to organize your notes and ideas.
+                Create a new note to organize your ideas.
             </DialogDescription>
           </DialogHeader>
           {/* setupform3: nyempilin komponen form */}
@@ -112,10 +114,10 @@ export default function CreateNotebookButton() {
                     <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                        <Input placeholder="My Notebook" {...field} />
+                        <Input placeholder="My Note" {...field} />
                     </FormControl>
                     <FormDescription>
-                        Enter a name for your notebook.
+                        Enter a name for your note.
                     </FormDescription>
                     <FormMessage />
                     </FormItem>

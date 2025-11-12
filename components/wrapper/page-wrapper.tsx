@@ -1,6 +1,7 @@
+import { Fragment } from "react";
 import { ModeToggle } from "../buttons/mode-toggle";
 import LogOut from "../logout";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "../ui/breadcrumb"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "../ui/breadcrumb"
 import { SidebarTrigger } from "../ui/sidebar"
 
 interface PageWrapperProps{
@@ -19,12 +20,16 @@ export function PageWrapper({children,breadcrumbs}:PageWrapperProps){
                         <SidebarTrigger />
                         <Breadcrumb>
                             <BreadcrumbList>
-                                {breadcrumbs.map((breadcrumb)=>(
-                                    <BreadcrumbItem key={breadcrumb.label}>
-                                        <BreadcrumbLink href={breadcrumb.href}>
-                                            {breadcrumb.label}
-                                        </BreadcrumbLink>
-                                    </BreadcrumbItem>
+                                {breadcrumbs.map((breadcrumb,index)=>(
+                                    // Fragment digunakan utk membungkus beberapa elemen tanpa menambah node ekstra ke DOM
+                                    <Fragment key={breadcrumb.label}>
+                                        <BreadcrumbItem>
+                                            <BreadcrumbLink href={breadcrumb.href}>
+                                                {breadcrumb.label}
+                                            </BreadcrumbLink>
+                                        </BreadcrumbItem>
+                                        {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
+                                    </Fragment>
                                 ))}
                             </BreadcrumbList>
                         </Breadcrumb>

@@ -1,5 +1,5 @@
 "use client"
-import { email, z } from "zod"
+import { z } from "zod"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -10,7 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
@@ -18,11 +17,9 @@ import { useState } from "react"
 import { signInUser } from "@/server/users"
 import { toast } from "sonner"
 
-
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -32,12 +29,10 @@ import Link from "next/link"
 import { Loader2 } from "lucide-react"
 import { authClient } from "@/lib/auth-client"
 
-
 const formSchema = z.object({
   email: z.email(), //menentukan validasi form agar muncul teguran bila salah input di form
   password: z.string().min(8) // minimal 8 karakter
 })
-
 
 export function LoginForm({
   className,
@@ -56,26 +51,25 @@ export function LoginForm({
     })
    
 
-
     const signInWithGoogle = async () => {
-      setIsLoading(true)
+      setIsLoading(true) 
       try{
-        const data = await authClient.signIn.social({
+        // const data = await authClient.signIn.social({
+          await authClient.signIn.social({
           provider: "google",
           callbackURL: "/dashboard" //mengarahkan ke dashboard bila berhasil login dengan google
         });
-      } catch(_){
+      } catch(error){
+          console.error(error)
+          toast.error("Gagal login dengan Google")
       } finally {
         setIsLoading(false)
       }
     };
 
 
-
-
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
-
 
       // Do something with the form values.
       // ✅ This will be type-safe and validated.
@@ -85,14 +79,14 @@ export function LoginForm({
         const response = await signInUser(values.email,values.password) //memanggil api signIn dari users.ts yg udh dibuat u/ login berdasarkan data form yg disubmit
         if (response.success){
           toast.success(response.message)
-          // jika login sukses & api login sesuai db user akan di route ke dasbor , bisa dicustom kemana nya
+          // jika login sukses & api login sesuai db user akan di route ke dasbor , bisa dicustom kemana nya 
           router.push("/dashboard")
         } else {
           toast.error(response.message)
         }
       } catch (error) {
         console.error(error)
-      } finally { //setelah validasi form, trycatch, kondisi selesai status loading = false
+      } finally { //setelah validasi form, trycatch, kondisi selesai status loading = false 
         setIsLoading(false)
       }
     }
@@ -106,7 +100,6 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-
 
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -160,8 +153,7 @@ export function LoginForm({
                 {isLoading ? (<Loader2 className="size-4 animate-spin" />) : ("Login") }
               </Button>
               <Button type="button" disabled={isLoading} onClick={signInWithGoogle} variant="outline" className="w-full">
-              {isLoading ? (<Loader2 className="size-4 animate-spin" />) :
-              "Login with Google" }
+                {isLoading ? (<Loader2 className="size-4 animate-spin" />) : "Login with Google" }
               </Button>
             </div>
           </div>
@@ -173,8 +165,6 @@ export function LoginForm({
             </div>
       </form>
     </Form>
-
-
 
 
         </CardContent>
