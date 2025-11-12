@@ -4,10 +4,12 @@ const nextConfig: NextConfig = {
   /* config options here */
   images:{
     remotePatterns:[{
-      hostname:"cdn.prod.website-files.com"
-    },
-  {hostname:"ik.imagekit.io"},
-]
+        hostname:"cdn.prod.website-files.com"
+      },
+      {hostname:"ik.imagekit.io"},
+      {hostname:"avatars.githubusercontent.com"},
+      {hostname:"randomuser.me"}
+    ]
   }
 };
 
