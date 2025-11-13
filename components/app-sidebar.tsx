@@ -43,7 +43,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
             width={120}
             height={30}
           />
-          <h1 className="font-medium text-xl tracking-wider">Fai's Data</h1>
+          <h1 className="font-medium text-xl tracking-wider">Fai&apos;s Data</h1>
         </div>
         <Suspense>
           <SearchForm />
