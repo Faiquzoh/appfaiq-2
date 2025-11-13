@@ -31,19 +31,19 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
   }
   return (
     <Sidebar {...props}>
-      <SidebarHeader>
+      <SidebarHeader className="flex flex-col gap-6 pt-4"> 
         {/* <VersionSwitcher
           versions={data.versions}
           defaultVersion={data.versions[0]}
         /> */}
         <div className="flex items-center gap-2">
           <Image
-            src="/logo.png"
+            src="/logo-fai.png"
             alt="logo"
-            width={32}
-            height={32}
+            width={120}
+            height={30}
           />
-          <h1 className="font-medium text-xl tracking-wider">AppReza</h1>
+          <h1 className="font-medium text-xl tracking-wider">Fai's Data</h1>
         </div>
         <Suspense>
           <SearchForm />
