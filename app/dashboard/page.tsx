@@ -5,12 +5,17 @@ import { PageWrapper } from "@/components/wrapper/page-wrapper"
 import { auth } from "@/lib/auth"
 import { getNotebooks } from "@/server/notebook"
 import { headers } from "next/headers"
+import { redirect } from "next/navigation"
+
 
 export default async function Page() {
   // menampilkan email yg terhubung dg session berdasarkan data login
   const session = await auth.api.getSession({
     headers: await headers()
   })
+    if (!session) {
+      redirect("/");
+  }
   const user = session?.user
   // memanggil function API getNotebooks utk menampilkan semua notebook milik user yg lg login 
   const notebooks = await getNotebooks()
