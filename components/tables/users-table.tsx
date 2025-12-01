@@ -2,6 +2,7 @@ import { getUsers } from "@/server/users"
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -15,17 +16,17 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
+import { Button } from "../ui/button"
 import { Pencil } from "lucide-react"
-import UserForm from "@/components/forms/user-form"
-import DeleteUserButton from "@/components/delete-user-button"
+import UserForm from "../forms/user-form"
+import DeleteUserButton from "../delete-user-button"
 import { fetchDataQuran } from "@/lib/quran"
 export default async function UsersTable(){
     const users = await getUsers() //menghubungkan / mengambil data dari api user agar siap pakai
     const dataQuran = await fetchDataQuran() //mendapatkan data dari api quran ke table
-    const pencariNamaSurat = (nomorSurat:number) => { //fungsi yg digunakan u/ mengolah data quran berdasarkan
+    const pencariNamaSurat = (nomorSurat:number) => { //fungsi yg digunakan u/ mengolah data quran berdasarkan 
       if (nomorSurat === 0){
-        return "qodarullah datanya kosong"
+        return "qoddarullah datanya kosong"
       }
       const namaSurat = dataQuran.find((nomerSuratDariAPI) => nomerSuratDariAPI.nomor === nomorSurat)
       return namaSurat ? namaSurat.namaLatin : 0
@@ -56,7 +57,7 @@ export default async function UsersTable(){
             <TableCell>{user.createdAt?.toLocaleString()}</TableCell>
             <TableCell>{user.updatedAt?.toLocaleString()}</TableCell>
             <TableCell className="text-right">
-              <Dialog>
+              <Dialog modal={false}>
                 <DialogTrigger asChild>
                   <Button variant="ghost">
                     <Pencil className="size-4" />
@@ -65,6 +66,9 @@ export default async function UsersTable(){
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Perubahan Data Santri</DialogTitle>
+                    <DialogDescription>
+                        Penambahan data santri insya Allah ke database online
+                    </DialogDescription>
                     <UserForm  user={user}/>
                   </DialogHeader>
                 </DialogContent>
