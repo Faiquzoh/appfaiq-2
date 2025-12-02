@@ -5,6 +5,29 @@ import { Button } from '@/components/ui/button'
 import React from 'react'
 import { ModeToggle } from './buttons/mode-toggle'
 import Image from 'next/image'
+import LogOut from './logout'
+
+type SessionType = {
+  user: {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    email: string;
+    emailVerified: boolean;
+    name: string;
+    image?: string | null;
+  };
+  session: {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    userId: string;
+    expiresAt: Date;
+    token: string;
+    ipAddress?: string | null;
+    userAgent?: string | null;
+  };
+} | null;
 
 const menuItems = [
     { name: 'Features', href: '#link' },
@@ -13,7 +36,7 @@ const menuItems = [
     { name: 'About', href: '#link' },
 ]
 
-export const HeroHeader = () => {
+export const HeroHeader = ({ session }: { session: SessionType }) => {
     const [menuState, setMenuState] = React.useState(false)
     return (
         <header>
@@ -75,22 +98,28 @@ export const HeroHeader = () => {
                                 </ul>
                             </div>
                             <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                                
-                                <Button
-                                    asChild
-                                    variant="outline"
-                                    size="sm">
-                                    <Link href="/login">
-                                        <span>Login</span>
-                                    </Link>
-                                </Button>
-                                <Button
-                                    asChild
-                                    size="sm">
-                                    <Link href="/signup">
-                                        <span>Sign Up</span>
-                                    </Link>
-                                </Button>
+                                {/* ternary operator u/ validasi session */}
+                                    {session ? (
+                                        <LogOut />
+                                    ) : (
+                                        <>
+                                            <Button
+                                                asChild
+                                                variant="outline"
+                                                size="sm">
+                                                <Link href="/signup">
+                                                    <span>Sign Up</span>
+                                                </Link>
+                                            </Button>
+                                            <Button
+                                                asChild
+                                                size="sm">
+                                                <Link href="/login">
+                                                    <span>Login</span>
+                                                </Link>
+                                            </Button>
+                                        </>
+                                    )}
                                 <ModeToggle />
                             </div>
                         </div>

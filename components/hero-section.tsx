@@ -5,11 +5,18 @@ import Image from 'next/image'
 import { HeroHeader } from './header'
 import { InfiniteSlider } from '@/components/ui/infinite-slider'
 import { ProgressiveBlur } from '@/components/ui/progressive-blur'
+// import library u/ get session
+import { auth } from '@/lib/auth'
+import { headers } from 'next/headers'
 
-export default function HeroSection() {
+export default async function HeroSection() {
+     // get session sesuai pengguna yg telah login
+    const session = await auth.api.getSession({
+    headers: await headers()
+  })
     return (
         <>
-            <HeroHeader />
+            <HeroHeader session={session} />
             <main className="overflow-x-hidden">
                 <section>
                     <div className="pb-24 pt-12 md:pb-32 lg:pb-56 lg:pt-44">
