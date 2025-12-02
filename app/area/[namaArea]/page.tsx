@@ -22,11 +22,17 @@ async function fetchDataCuaca(lat:string,lon:string) {
     const dataMeteoMateng = await res.json()
     return dataMeteoMateng.current_weather
 }
-
-async function fetchDataWaktu(lat:string,lon:string) {
-    const res = await fetch(`https://timeapi.io/api/Time/current/coordinate?latitude=${lat}&longitude=${lon}`)
-    const dataTimeMateng = await res.json()
-    return dataTimeMateng
+type DataWaktu = {
+    formatted:string,
+    zoneName:string,
+}
+async function fetchDataWaktu(lat:string,lon:string): Promise<DataWaktu> {
+    const response = await fetch(
+      `https://api.timezonedb.com/v2.1/get-time-zone?key=${process.env.TIMEZONE_DB_API_KEY}&format=json&by=position&lat=${lat}&lng=${lon}`,
+      { cache: 'no-store' }
+    );
+    const DataWaktu: DataWaktu = await response.json();
+    return DataWaktu;
 }
 
 async function fetchMataUang(countryCode:string) {
@@ -71,9 +77,10 @@ export default async function HalamanInfoWilayah(
             <h3>kordinat bumi: {lokasi.lat},{lokasi.lon}</h3>
             <h3>suhu: {cuaca.temperature}°C</h3>
             <h3>kecepatan angin: {cuaca.windspeed} km/h</h3>
-            <h3>tanggal: {waktu.date}</h3>
-            <h3>waktu: {waktu.time}</h3>
-            <h3>hari: {waktu.dayOfWeek}</h3>
+            {/* <h3>tanggal: {waktu.date}</h3> */}
+            <h3>waktu: {waktu.formatted}</h3>
+            <h3>zona waktu: {waktu.zoneName}</h3>
+            {/* <h3>hari: {waktu.dayOfWeek}</h3> */}
             <h3>Mata Uang: {mataUang.name}</h3>
             <h3>kurs ke indo: {kurs.rate.toLocaleString('id-ID')}</h3>
         </div>
