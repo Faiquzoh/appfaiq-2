@@ -1,7 +1,8 @@
 "use server"
 import { db } from "@/db/drizzle"
-import  {user } from "@/db/schema"
+import { User, user } from "@/db/schema"
 import { auth } from "@/lib/auth"
+import { error } from "console"
 import { eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 type TahfizhDataInput = {
